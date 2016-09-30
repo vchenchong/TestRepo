@@ -2,5 +2,6 @@
     <string name="app_name">TestRepo</string>
 
     <string name="over_scroll">OverScroll</string>
+    <string name="nested_scroll">NestedScroll</string>
 
 </resources>

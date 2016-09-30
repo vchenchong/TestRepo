@@ -19,6 +19,9 @@
         <activity android:name=".overscroll.OverScrollTestActivity">
         </activity>
 
+        <activity android:name=".nestedscroll.NestedScrollTestActivity">
+        </activity>
+
     </application>
 
 </manifest>
