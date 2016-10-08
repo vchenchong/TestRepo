@@ -5,12 +5,13 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import com.cc.testrepo.multitouch.MultiTouchTestActivity;
 import com.cc.testrepo.nestedscroll.NestedScrollTestActivity;
 import com.cc.testrepo.overscroll.OverScrollTestActivity;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final Class TEST_CLASS = NestedScrollTestActivity.class;
+    private static final Class TEST_CLASS = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +34,10 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.nestedcroll:
                 intent = new Intent(this, NestedScrollTestActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.multitouch:
+                intent = new Intent(this, MultiTouchTestActivity.class);
                 startActivity(intent);
                 break;
         }

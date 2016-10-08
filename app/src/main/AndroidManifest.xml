@@ -22,6 +22,9 @@
         <activity android:name=".nestedscroll.NestedScrollTestActivity">
         </activity>
 
+        <activity android:name=".multitouch.MultiTouchTestActivity">
+        </activity>
+
     </application>
 
 </manifest>
