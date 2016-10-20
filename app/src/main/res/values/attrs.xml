@@ -5,4 +5,10 @@
         <attr name="overScrollDistance" format="dimension"/>
     </declare-styleable>
 
+    <declare-styleable name="ExpandGridLayout">
+        <attr name="visibleLineCount" format="integer"/>
+        <attr name="columnCount" format="integer"/>
+
+    </declare-styleable>
+
 </resources>

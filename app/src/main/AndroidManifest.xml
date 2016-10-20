@@ -30,6 +30,9 @@
             >
         </activity>
 
+        <activity android:name=".expandgridview.ExpandViewTestActivity">
+        </activity>
+
     </application>
 
 </manifest>
