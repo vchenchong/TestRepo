@@ -25,6 +25,11 @@
         <activity android:name=".multitouch.MultiTouchTestActivity">
         </activity>
 
+        <activity android:name=".ime.IMETestActivity"
+            android:windowSoftInputMode="adjustResize"
+            >
+        </activity>
+
     </application>
 
 </manifest>

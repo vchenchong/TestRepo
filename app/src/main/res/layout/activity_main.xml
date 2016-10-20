@@ -36,5 +36,13 @@
         android:onClick="performClick"
         />
 
+    <Button
+        android:id="@+id/ime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/ime"
+        android:onClick="performClick"
+        />
+
 
 </LinearLayout>
