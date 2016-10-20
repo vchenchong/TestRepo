@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import com.cc.testrepo.ime.IMETestActivity;
 import com.cc.testrepo.multitouch.MultiTouchTestActivity;
 import com.cc.testrepo.nestedscroll.NestedScrollTestActivity;
 import com.cc.testrepo.overscroll.OverScrollTestActivity;
@@ -38,6 +39,10 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.multitouch:
                 intent = new Intent(this, MultiTouchTestActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.ime:
+                intent = new Intent(this, IMETestActivity.class);
                 startActivity(intent);
                 break;
         }

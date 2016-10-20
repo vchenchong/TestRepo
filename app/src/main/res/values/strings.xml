@@ -4,5 +4,6 @@
     <string name="over_scroll">OverScroll</string>
     <string name="nested_scroll">NestedScroll</string>
     <string name="multitouch">MultiTouch</string>
+    <string name="ime">ime</string>
 
 </resources>
