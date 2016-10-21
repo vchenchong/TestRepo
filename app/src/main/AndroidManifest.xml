@@ -33,6 +33,9 @@
         <activity android:name=".expandgridview.ExpandViewTestActivity">
         </activity>
 
+        <activity android:name=".expandgridview.EqualDivisionGridTestActivity">
+        </activity>
+
     </application>
 
 </manifest>
