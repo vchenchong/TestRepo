@@ -20,4 +20,11 @@
         </attr>
     </declare-styleable>
 
+    <declare-styleable name="PhoneView">
+        <attr name="formatter">
+            <enum name="DIVIDER" value="0"/>
+        </attr>
+        <attr name="formatter_divider" format="string"/>
+    </declare-styleable>
+
 </resources>

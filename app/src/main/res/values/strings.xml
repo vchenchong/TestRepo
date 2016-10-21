@@ -7,5 +7,6 @@
     <string name="ime">ime</string>
     <string name="expand_grid_view">ExpandGridView</string>
     <string name="equal_division_grid">EqualDivisionGrid</string>
+    <string name="phone_view">PhoneView</string>
 
 </resources>

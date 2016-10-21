@@ -36,6 +36,9 @@
         <activity android:name=".expandgridview.EqualDivisionGridTestActivity">
         </activity>
 
+        <activity android:name=".phoneview.PhoneViewTestActivity">
+        </activity>
+
     </application>
 
 </manifest>
