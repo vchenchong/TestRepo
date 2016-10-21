@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import com.cc.testrepo.expandgridview.EqualDivisionGridTestActivity;
 import com.cc.testrepo.expandgridview.ExpandViewTestActivity;
 import com.cc.testrepo.ime.IMETestActivity;
 import com.cc.testrepo.multitouch.MultiTouchTestActivity;
@@ -13,7 +14,7 @@ import com.cc.testrepo.overscroll.OverScrollTestActivity;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final Class TEST_CLASS = null;
+    private static final Class TEST_CLASS = EqualDivisionGridTestActivity.class;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +49,10 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.expand_grid_view:
                 intent = new Intent(this, ExpandViewTestActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.equal_division_grid:
+                intent = new Intent(this, EqualDivisionGridTestActivity.class);
                 startActivity(intent);
                 break;
         }

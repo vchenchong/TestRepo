@@ -52,4 +52,12 @@
         android:onClick="performClick"
         />
 
+    <Button
+        android:id="@+id/equal_division_grid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/equal_division_grid"
+        android:onClick="performClick"
+        />
+
 </LinearLayout>

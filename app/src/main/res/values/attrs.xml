@@ -8,7 +8,16 @@
     <declare-styleable name="ExpandGridLayout">
         <attr name="visibleLineCount" format="integer"/>
         <attr name="columnCount" format="integer"/>
+    </declare-styleable>
 
+
+    <declare-styleable name="EqualDivisionGridLayout">
+        <attr name="column_count" format="integer"/>
+        <attr name="divider_height" format="dimension"/>
+        <attr name="space_mode">
+            <enum name="WITH_BOUND" value="0"/>
+            <enum name="WITHOUT_BOUND" value="1"/>
+        </attr>
     </declare-styleable>
 
 </resources>
