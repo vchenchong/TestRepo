@@ -47,8 +47,10 @@ public class ToastDialogFragment extends DialogFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Logger.log("onCreate");
-        if (savedInstanceState != null) {
-            mDuration = savedInstanceState.getInt(ARGS_KEY_DURATION);
+
+        Bundle args = getArguments();
+        if (args != null) {
+            mDuration = args.getInt(ARGS_KEY_DURATION);
         }
     }
 
