@@ -11,10 +11,11 @@ import com.cc.testrepo.ime.IMETestActivity;
 import com.cc.testrepo.multitouch.MultiTouchTestActivity;
 import com.cc.testrepo.nestedscroll.NestedScrollTestActivity;
 import com.cc.testrepo.overscroll.OverScrollTestActivity;
+import com.cc.testrepo.phoneview.PhoneViewTestActivity;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final Class TEST_CLASS = EqualDivisionGridTestActivity.class;
+    private static final Class TEST_CLASS = PhoneViewTestActivity.class;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +54,10 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.equal_division_grid:
                 intent = new Intent(this, EqualDivisionGridTestActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.phone_view:
+                intent = new Intent(this, PhoneViewTestActivity.class);
                 startActivity(intent);
                 break;
         }
