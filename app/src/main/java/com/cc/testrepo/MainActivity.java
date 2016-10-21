@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import com.cc.testrepo.dialog.DialogTestActivity;
 import com.cc.testrepo.expandgridview.EqualDivisionGridTestActivity;
 import com.cc.testrepo.expandgridview.ExpandViewTestActivity;
 import com.cc.testrepo.ime.IMETestActivity;
@@ -15,7 +16,7 @@ import com.cc.testrepo.phoneview.PhoneViewTestActivity;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final Class TEST_CLASS = PhoneViewTestActivity.class;
+    private static final Class TEST_CLASS = DialogTestActivity.class;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +59,10 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.phone_view:
                 intent = new Intent(this, PhoneViewTestActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.dialog:
+                intent = new Intent(this, DialogTestActivity.class);
                 startActivity(intent);
                 break;
         }

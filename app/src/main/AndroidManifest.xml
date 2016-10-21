@@ -39,6 +39,9 @@
         <activity android:name=".phoneview.PhoneViewTestActivity">
         </activity>
 
+        <activity android:name=".dialog.DialogTestActivity">
+        </activity>
+
     </application>
 
 </manifest>
