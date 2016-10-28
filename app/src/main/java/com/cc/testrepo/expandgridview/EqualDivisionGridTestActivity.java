@@ -3,18 +3,17 @@ package com.cc.testrepo.expandgridview;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.cc.testrepo.R;
 import com.cc.testrepo.base.BaseActivity;
 
-/**
- * Created by chenchong on 16/10/20.
- */
+import java.util.Random;
 
 public class EqualDivisionGridTestActivity extends BaseActivity {
 
-    private static final int CHILD_COUNT = 5;
+    private static final int CHILD_COUNT = 6;
 
     private EqualDivisionGridLayout mGrid;
 
@@ -24,11 +23,22 @@ public class EqualDivisionGridTestActivity extends BaseActivity {
         setContentView(R.layout.euqual_division_grid_layout);
         mGrid = (EqualDivisionGridLayout)findViewById(R.id.grid);
 
+        Random rand = new Random();
+
         LayoutInflater inflater = LayoutInflater.from(this);
         for (int i=0; i<CHILD_COUNT; ++i) {
             TextView tv = (TextView)inflater.inflate(R.layout.expand_grid_layout_item_layout, mGrid, false);
             tv.setText(i + " : " + i);
+            ViewGroup.LayoutParams lp = tv.getLayoutParams();
+            lp.width = rand.nextInt(50) + 150;
+            lp.height = rand.nextInt(50) + 75;
             mGrid.addView(tv);
+//            int r = rand.nextInt(10);
+//            if (r == 0) {
+//                tv.setVisibility(View.GONE);
+//            } else if (r == 1) {
+//                tv.setVisibility(View.INVISIBLE);
+//            }
         }
     }
 }

@@ -9,9 +9,20 @@ import android.view.ViewGroup;
 import com.cc.testrepo.R;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class EqualDivisionGridLayout extends ViewGroup {
+
+    public static final int GRAVITY_LEFT = 0x01;
+    public static final int GRAVITY_CENTER_HORIZONTAL = 0x02;
+    public static final int GRAVITY_RIGHT = 0x04;
+    public static final int GRAVITY_TOP = 0x10;
+    public static final int GRAVITY_CENTER_VERTICAL = 0x20;
+    public static final int GRAVITY_BOTTOM = 0x40;
+    public static final int GRAVITY_CENTER = GRAVITY_CENTER_HORIZONTAL | GRAVITY_CENTER_VERTICAL;
+    private static final int GRAVITY_HORIZONTAL_MASK = 0x0F;
+    private static final int GRAVITY_VERTICAL_MASK = 0xF0;
 
     /**
      *  SPACE_MODE表示计算水平间隔的方式,WITH_OUT_BOUND表示仅将水平多余的空间分摊在子视图之间
@@ -26,48 +37,43 @@ public class EqualDivisionGridLayout extends ViewGroup {
      */
     private int mDividerHeight;
 
+    private int mGravity;
+
     private int mSpaceMode;
 
     /**
-     *  每一行元素的宽度和
+     *  每一列的最大宽度
      */
-    private List<Integer> mLineWidthList;
+    private int[] mMaxWidthPerColumn;
 
     /**
      *  每一行元素的最大高度
      */
     private List<Integer> mLineHeightList;
 
+    private int mVisibleChildCount;
+
     public EqualDivisionGridLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
         TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.EqualDivisionGridLayout, 0, 0);
-        for (int i=0, size=a.length(); i<size; ++i) {
-            int attr = a.getIndex(i);
-            switch (attr) {
-                case R.styleable.EqualDivisionGridLayout_column_count:
-                    mColumnCount = a.getInteger(attr, 1);
-                    break;
-                case R.styleable.EqualDivisionGridLayout_divider_height:
-                    mDividerHeight = (int)a.getDimension(attr, 0);
-                    break;
-                case R.styleable.EqualDivisionGridLayout_space_mode:
-                    mSpaceMode = a.getInt(R.styleable.EqualDivisionGridLayout_space_mode, SPACE_MODE_WITH_BOUND);
-                    break;
-            }
-        }
+
+        mColumnCount = a.getInteger(R.styleable.EqualDivisionGridLayout_column_count, 1);
+        mColumnCount = Math.max(mColumnCount, 1);
+
+        mDividerHeight = (int)a.getDimension(R.styleable.EqualDivisionGridLayout_divider_height, 0);
+        mDividerHeight = Math.max(mDividerHeight, 0);
+
+        mSpaceMode = a.getInt(R.styleable.EqualDivisionGridLayout_space_mode, SPACE_MODE_WITH_BOUND);
+
+        mGravity = a.getInt(R.styleable.EqualDivisionGridLayout_gravity, GRAVITY_CENTER);
+
         a.recycle();
 
-        checkParameterValidity();
         init();
     }
 
-    private void checkParameterValidity() {
-        mColumnCount = Math.max(mColumnCount, 1);
-        mDividerHeight = Math.max(mDividerHeight, 0);
-    }
-
     private void init() {
-        mLineWidthList = new ArrayList<>();
+        mMaxWidthPerColumn = new int[mColumnCount];
         mLineHeightList = new ArrayList<>();
     }
 
@@ -75,64 +81,67 @@ public class EqualDivisionGridLayout extends ViewGroup {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         measureChildren(widthMeasureSpec, heightMeasureSpec);
 
-        int widthSize = MeasureSpec.getSize(widthMeasureSpec);
-        int widthMode = MeasureSpec.getMode(widthMeasureSpec);
-        int heightSize = MeasureSpec.getSize(heightMeasureSpec);
-        int heightMode = MeasureSpec.getMode(heightMeasureSpec);
-
         int childCount = getChildCount();
+        mVisibleChildCount = childCount;
 
-        mLineWidthList.clear();
+        Arrays.fill(mMaxWidthPerColumn, 0);
         mLineHeightList.clear();
 
-        int width = 0;
-        int height = 0;
-        int lineWidth = 0;
         int lineHeight = 0;
-        for (int i=0; i<childCount; ++i) {
-            if (i % mColumnCount == 0 && i != 0) {
-                if (lineWidth > width) {
-                    width = lineWidth;
-                }
-                mLineWidthList.add(lineWidth);
-                lineWidth = 0;
+        for (int i=0, visibleIndex=0; i<childCount; ++i) {
+            View child = getChildAt(i);
+            if (child.getVisibility() == View.GONE) {
+                --mVisibleChildCount;
+                continue;
+            }
 
-                height += lineHeight;
+            if (visibleIndex % mColumnCount == 0 && visibleIndex != 0) {
                 mLineHeightList.add(lineHeight);
                 lineHeight = 0;
             }
-            lineWidth += getChildAt(i).getMeasuredWidth();
-            int childHeight = getChildAt(i).getMeasuredHeight();
+
+            int childWidth = child.getMeasuredWidth();
+            int columnIndex = visibleIndex % mColumnCount;
+            if (childWidth > mMaxWidthPerColumn[columnIndex]) {
+                mMaxWidthPerColumn[columnIndex] = childWidth;
+            }
+
+            int childHeight = child.getMeasuredHeight();
             if (childHeight > lineHeight) {
                 lineHeight = childHeight;
             }
-        }
-        if (lineWidth > 0) {
-            //  最后一行,若子视图个数不足mColumnCount,按比例计算该行应该占据的宽度
-            int lastLineViewCount = childCount % mColumnCount;
-            if (lastLineViewCount != 0) {
-                lineWidth = (int)(lineWidth * (double)(mColumnCount) / lastLineViewCount);
-            }
-            mLineWidthList.add(lineWidth);
-            if (lineWidth > width) {
-                width = lineWidth;
-            }
+
+            ++visibleIndex;
         }
         if (lineHeight > 0) {
             mLineHeightList.add(lineHeight);
-            height += lineHeight;
         }
 
+        int widthSize = MeasureSpec.getSize(widthMeasureSpec);
+        int widthMode = MeasureSpec.getMode(widthMeasureSpec);
+        int width = 0;
         if (widthMode == MeasureSpec.EXACTLY) {
             width = widthSize;
         } else {
+            //  计算宽度需要考虑可见子视图个数不满mColumn的情况
+            for (int i=0; i!=mColumnCount; ++i) {
+                width += mMaxWidthPerColumn[i];
+            }
+            width = scaleWidthIfNeeded(width);
             width = Math.min(width + getPaddingLeft() + getPaddingRight(), widthSize);
         }
 
+        int heightSize = MeasureSpec.getSize(heightMeasureSpec);
+        int heightMode = MeasureSpec.getMode(heightMeasureSpec);
+        int height = 0;
         if (heightMode == MeasureSpec.EXACTLY) {
             height = heightSize;
         } else {
-            height = height + getPaddingTop() + getPaddingBottom() + mDividerHeight * (mLineHeightList.size() - 1);
+            for (int i=0, size=mLineHeightList.size(); i!=size; ++i) {
+                height += mLineHeightList.get(i);
+            }
+            height = height + getPaddingTop() + getPaddingBottom() +
+                    (mLineHeightList.size() > 0 ? mDividerHeight * (mLineHeightList.size() - 1) : 0);
             height = Math.min(height, heightSize);
         }
 
@@ -142,40 +151,92 @@ public class EqualDivisionGridLayout extends ViewGroup {
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         int paddingLeft = getPaddingLeft();
-        int paddingRight = getPaddingRight();
-        int childCount = getChildCount();
-        int width = getMeasuredWidth();
 
-        int lineIndex;
+        int horizontalGravity = mGravity & GRAVITY_HORIZONTAL_MASK;
+        int verticalGravity = mGravity & GRAVITY_VERTICAL_MASK;
+
+        //  计算子视图水平间距space
+        int childrenWidth = 0;
+        for (int i=0; i!=mColumnCount; ++i) {
+            childrenWidth += mMaxWidthPerColumn[i];
+        }
+        childrenWidth = scaleWidthIfNeeded(childrenWidth);
+        int spaceCount = mSpaceMode == SPACE_MODE_WITH_BOUND || mColumnCount == 1 ? mColumnCount + 1 : mColumnCount - 1;
+        int space = (getMeasuredWidth() - paddingLeft - getPaddingRight() - childrenWidth) / spaceCount;
+
         int lineHeight = 0;
+        int lineIndex = 0;
         int x = 0;
         int y = getPaddingTop();
-        int space = 0;
-        int spaceCount = mSpaceMode == SPACE_MODE_WITH_BOUND || mColumnCount == 1 ? mColumnCount + 1 : mColumnCount - 1;
-        for (int i=0; i<childCount; ++i) {
-            if (i % mColumnCount == 0) {
-                lineIndex = i / mColumnCount;
-                lineHeight = mLineHeightList.get(lineIndex);
-                space = (width - paddingLeft - paddingRight - mLineWidthList.get(lineIndex)) / spaceCount;
-                if (space < 0) {
-                    space = 0;
-                }
+
+        for (int i=0, visibleIndex=0, childCount=getChildCount(); i<childCount; ++i) {
+            View child = getChildAt(i);
+            if (child.getVisibility() == View.GONE) {
+                continue;
+            }
+
+            if (visibleIndex % mColumnCount == 0) {
                 if (mSpaceMode == SPACE_MODE_WITH_BOUND) {
                     x = paddingLeft + space;
                 } else {
                     x = paddingLeft;
                 }
+
+                lineIndex = visibleIndex / mColumnCount;
                 if (lineIndex > 0) {
-                    y += mLineHeightList.get(lineIndex - 1) + mDividerHeight;
+                    y += lineHeight + mDividerHeight;
                 }
+                lineHeight = mLineHeightList.get(lineIndex);
             }
 
-            View view = getChildAt(i);
-            int measuredWidth = view.getMeasuredWidth();
-            int measuredHeight = view.getMeasuredHeight();
-            int topOffset = (lineHeight - measuredHeight) / 2;
-            view.layout(x, y + topOffset, x + measuredWidth, y + topOffset + measuredHeight);
-            x += measuredWidth + space;
+            //  水平
+            int leftOffset;
+            int measuredWidth = child.getMeasuredWidth();
+            int columnIndex = visibleIndex % mColumnCount;
+            switch (horizontalGravity) {
+                case GRAVITY_LEFT:
+                    leftOffset = 0;
+                    break;
+                case GRAVITY_RIGHT:
+                    leftOffset = mMaxWidthPerColumn[columnIndex] - measuredWidth;
+                    break;
+                case GRAVITY_CENTER_HORIZONTAL:
+                default:
+                    leftOffset = (mMaxWidthPerColumn[columnIndex] - measuredWidth) / 2;
+                    break;
+            }
+
+            //  垂直
+            int topOffset;
+            int measuredHeight = child.getMeasuredHeight();
+            switch (verticalGravity) {
+                case GRAVITY_TOP:
+                    topOffset = 0;
+                    break;
+                case GRAVITY_BOTTOM:
+                    topOffset = mLineHeightList.get(lineIndex) - measuredHeight;
+                    break;
+                case GRAVITY_CENTER_VERTICAL:
+                default:
+                    topOffset = (mLineHeightList.get(lineIndex) - measuredHeight) / 2;
+                    break;
+            }
+
+            child.layout(x + leftOffset, y + topOffset, x + leftOffset + measuredWidth, y + topOffset + measuredHeight);
+            x += mMaxWidthPerColumn[columnIndex] + space;
+            ++visibleIndex;
         }
+    }
+
+    /**
+     *  若可见子视图个数不足列数,按比例进行放大
+     * @param width 可见视图的宽度和
+     * @return 放大后的宽度
+     */
+    private int scaleWidthIfNeeded(int width) {
+        if (mVisibleChildCount > 0 && mVisibleChildCount < mColumnCount) {
+            return (int)((double)width * mColumnCount / mVisibleChildCount);
+        }
+        return width;
     }
 }

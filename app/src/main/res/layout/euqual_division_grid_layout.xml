@@ -17,6 +17,7 @@
         app:column_count="4"
         app:divider_height="5dp"
         app:space_mode="WITH_BOUND"
+        app:gravity="center"
         >
 
     </com.cc.testrepo.expandgridview.EqualDivisionGridLayout>
