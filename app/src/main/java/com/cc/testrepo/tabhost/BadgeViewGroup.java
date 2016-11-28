@@ -229,9 +229,11 @@ public class BadgeViewGroup extends ViewGroup {
                 return;
             }
 
+
             Paint.FontMetrics fm = mPaint.getFontMetrics();
             int offsetX = getWidth() / 2;
-            float baselineY = getHeight() / 2 - fm.descent + (fm.bottom - fm.top) / 2;
+//            float baselineY = getHeight() / 2 - fm.descent + (fm.bottom - fm.top) / 2;
+            float baselineY = (getHeight() - fm.descent - fm.ascent) / 2;
             canvas.drawText(mText, offsetX, baselineY, mPaint);
         }
     }
