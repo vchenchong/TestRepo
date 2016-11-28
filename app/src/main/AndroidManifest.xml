@@ -42,6 +42,9 @@
         <activity android:name=".dialog.DialogTestActivity">
         </activity>
 
+        <activity android:name=".tabhost.TabHostActivity">
+        </activity>
+
     </application>
 
 </manifest>

@@ -36,4 +36,19 @@
         <attr name="formatter_divider" format="string"/>
     </declare-styleable>
 
+    <declare-styleable name="BadgeViewGroup">
+        <attr name="icon_gravity">
+            <enum name="left" value="0"/>
+            <enum name="right" value="1"/>
+        </attr>
+        <attr name="icon_background" format="reference"/>
+        <attr name="icon_text" format="string"/>
+        <attr name="icon_text_color" format="color"/>
+        <attr name="icon_text_size" format="dimension"/>
+        <attr name="icon_visible" format="boolean"/>
+        <attr name="icon_offset_x" format="dimension"/>
+        <attr name="icon_offset_y" format="dimension"/>
+        <attr name="icon_dot_size" format="dimension"/>
+    </declare-styleable>
+
 </resources>

@@ -13,10 +13,11 @@ import com.cc.testrepo.multitouch.MultiTouchTestActivity;
 import com.cc.testrepo.nestedscroll.NestedScrollTestActivity;
 import com.cc.testrepo.overscroll.OverScrollTestActivity;
 import com.cc.testrepo.phoneview.PhoneViewTestActivity;
+import com.cc.testrepo.tabhost.TabHostActivity;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final Class TEST_CLASS = DialogTestActivity.class;
+    private static final Class TEST_CLASS = TabHostActivity.class;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +64,10 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.dialog:
                 intent = new Intent(this, DialogTestActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.tab_host:
+                intent = new Intent(this, TabHostActivity.class);
                 startActivity(intent);
                 break;
         }
