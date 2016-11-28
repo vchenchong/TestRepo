@@ -5,21 +5,30 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.cc.testrepo.expandgridview.EqualDivisionGridLayout
-        android:id="@+id/grid"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="100dp"
-        android:paddingTop="20dp"
-        android:paddingBottom="20dp"
-        android:background="#abcdef"
-        app:column_count="4"
-        app:divider_height="5dp"
-        app:space_mode="WITH_BOUND"
-        app:gravity="center"
-        >
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    </com.cc.testrepo.expandgridview.EqualDivisionGridLayout>
+                <com.cc.testrepo.expandgridview.EqualDivisionGridLayout
+                    android:id="@+id/grid"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:background="#abcdef"
+                    app:column_count="4"
+                    app:divider_height="5dp"
+                    app:space_mode="WITH_BOUND"
+                    app:gravity="center"
+                    >
+
+                </com.cc.testrepo.expandgridview.EqualDivisionGridLayout>
+
+
+        </ScrollView>
+
 
 </FrameLayout>

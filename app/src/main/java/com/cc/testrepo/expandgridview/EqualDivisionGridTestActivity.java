@@ -13,7 +13,7 @@ import java.util.Random;
 
 public class EqualDivisionGridTestActivity extends BaseActivity {
 
-    private static final int CHILD_COUNT = 6;
+    private static final int CHILD_COUNT = 50;
 
     private EqualDivisionGridLayout mGrid;
 

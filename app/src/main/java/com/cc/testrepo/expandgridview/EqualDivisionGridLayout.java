@@ -128,7 +128,9 @@ public class EqualDivisionGridLayout extends ViewGroup {
                 width += mMaxWidthPerColumn[i];
             }
             width = scaleWidthIfNeeded(width);
-            width = Math.min(width + getPaddingLeft() + getPaddingRight(), widthSize);
+            if (widthMode == MeasureSpec.AT_MOST) {
+                width = Math.min(width + getPaddingLeft() + getPaddingRight(), widthSize);
+            }
         }
 
         int heightSize = MeasureSpec.getSize(heightMeasureSpec);
@@ -142,7 +144,9 @@ public class EqualDivisionGridLayout extends ViewGroup {
             }
             height = height + getPaddingTop() + getPaddingBottom() +
                     (mLineHeightList.size() > 0 ? mDividerHeight * (mLineHeightList.size() - 1) : 0);
-            height = Math.min(height, heightSize);
+            if (heightMode == MeasureSpec.AT_MOST) {
+                height = Math.min(height, heightSize);
+            }
         }
 
         setMeasuredDimension(width, height);
@@ -162,7 +166,7 @@ public class EqualDivisionGridLayout extends ViewGroup {
         }
         childrenWidth = scaleWidthIfNeeded(childrenWidth);
         int spaceCount = mSpaceMode == SPACE_MODE_WITH_BOUND || mColumnCount == 1 ? mColumnCount + 1 : mColumnCount - 1;
-        int space = (getMeasuredWidth() - paddingLeft - getPaddingRight() - childrenWidth) / spaceCount;
+        int space = Math.max(((getMeasuredWidth() - paddingLeft - getPaddingRight() - childrenWidth) / spaceCount), 0);
 
         int lineHeight = 0;
         int lineIndex = 0;
