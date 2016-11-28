@@ -9,5 +9,6 @@
     <string name="equal_division_grid">EqualDivisionGrid</string>
     <string name="phone_view">PhoneView</string>
     <string name="dialog">Dialog</string>
+    <string name="tab_host">TabHost</string>
 
 </resources>
