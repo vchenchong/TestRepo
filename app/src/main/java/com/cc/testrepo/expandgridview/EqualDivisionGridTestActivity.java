@@ -2,7 +2,9 @@ package com.cc.testrepo.expandgridview;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
@@ -31,7 +33,9 @@ public class EqualDivisionGridTestActivity extends BaseActivity {
             tv.setText(i + " : " + i);
             ViewGroup.LayoutParams lp = tv.getLayoutParams();
             lp.width = rand.nextInt(50) + 150;
+            lp.width = -2;
             lp.height = rand.nextInt(50) + 75;
+            lp.height = -2;
             mGrid.addView(tv);
 //            int r = rand.nextInt(10);
 //            if (r == 0) {
@@ -39,6 +43,13 @@ public class EqualDivisionGridTestActivity extends BaseActivity {
 //            } else if (r == 1) {
 //                tv.setVisibility(View.INVISIBLE);
 //            }
+
+            mGrid.setOnGridItemClickListener(new EqualDivisionGridLayout.OnGridItemClickListener() {
+                @Override
+                public void onGridItemClick(View view, int position) {
+                    Log.d("chen", "Position : " + position);
+                }
+            });
         }
     }
 }

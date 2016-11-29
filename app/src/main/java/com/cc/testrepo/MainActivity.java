@@ -18,7 +18,7 @@ import com.cc.testrepo.tabhost.TabHostActivity;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final Class TEST_CLASS = ProgressBarTestActivity.class;
+    private static final Class TEST_CLASS = EqualDivisionGridTestActivity.class;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
