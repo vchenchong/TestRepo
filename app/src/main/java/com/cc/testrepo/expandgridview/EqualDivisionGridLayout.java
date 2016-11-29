@@ -53,6 +53,9 @@ public class EqualDivisionGridLayout extends ViewGroup {
 
     private int mVisibleChildCount;
 
+    private OnClickListener mCommonOnClickListener;
+    private OnGridItemClickListener mGridItemClickListener;
+
     public EqualDivisionGridLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
         TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.EqualDivisionGridLayout, 0, 0);
@@ -70,11 +73,39 @@ public class EqualDivisionGridLayout extends ViewGroup {
         a.recycle();
 
         init();
+        initClickListener();
     }
 
     private void init() {
         mMaxWidthPerColumn = new int[mColumnCount];
         mLineHeightList = new ArrayList<>();
+    }
+
+    private void initClickListener() {
+        mCommonOnClickListener = new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mGridItemClickListener != null) {
+                    mGridItemClickListener.onGridItemClick(v, indexOfChild(v));
+                }
+            }
+        };
+    }
+
+    public int getColumnCount() {
+        return mColumnCount;
+    }
+
+    @Override
+    public void addView(View child, int index, LayoutParams params) {
+        super.addView(child, index, params);
+        if (child != null) {
+            child.setOnClickListener(mCommonOnClickListener);
+        }
+    }
+
+    public void setOnGridItemClickListener(OnGridItemClickListener listener) {
+        mGridItemClickListener = listener;
     }
 
     @Override
@@ -242,5 +273,9 @@ public class EqualDivisionGridLayout extends ViewGroup {
             return (int)((double)width * mColumnCount / mVisibleChildCount);
         }
         return width;
+    }
+
+    public interface OnGridItemClickListener {
+        void onGridItemClick(View view, int position);
     }
 }
