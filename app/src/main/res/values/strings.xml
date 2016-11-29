@@ -10,5 +10,6 @@
     <string name="phone_view">PhoneView</string>
     <string name="dialog">Dialog</string>
     <string name="tab_host">TabHost</string>
+    <string name="progress_bar">ProgressBar</string>
 
 </resources>

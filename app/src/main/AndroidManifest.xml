@@ -45,6 +45,9 @@
         <activity android:name=".tabhost.TabHostActivity">
         </activity>
 
+        <activity android:name=".progressbar.ProgressBarTestActivity">
+        </activity>
+
     </application>
 
 </manifest>
