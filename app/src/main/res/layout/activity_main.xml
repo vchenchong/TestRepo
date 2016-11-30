@@ -1,94 +1,109 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.cc.testrepo.MainActivity">
+    >
 
-    <Button
-        android:id="@+id/overscroll"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/activity_main"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/over_scroll"
-        android:onClick="performClick"
-        />
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        tools:context="com.cc.testrepo.MainActivity">
 
-    <Button
-        android:id="@+id/nestedcroll"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/nested_scroll"
-        android:onClick="performClick"
-        />
+        <Button
+            android:id="@+id/overscroll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/over_scroll"
+            android:onClick="performClick"
+            />
 
-    <Button
-        android:id="@+id/multitouch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/multitouch"
-        android:onClick="performClick"
-        />
+        <Button
+            android:id="@+id/nestedcroll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/nested_scroll"
+            android:onClick="performClick"
+            />
 
-    <Button
-        android:id="@+id/ime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/ime"
-        android:onClick="performClick"
-        />
+        <Button
+            android:id="@+id/multitouch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/multitouch"
+            android:onClick="performClick"
+            />
 
-    <Button
-        android:id="@+id/expand_grid_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/expand_grid_view"
-        android:onClick="performClick"
-        />
+        <Button
+            android:id="@+id/ime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ime"
+            android:onClick="performClick"
+            />
 
-    <Button
-        android:id="@+id/equal_division_grid"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/equal_division_grid"
-        android:onClick="performClick"
-        />
+        <Button
+            android:id="@+id/expand_grid_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/expand_grid_view"
+            android:onClick="performClick"
+            />
 
-    <Button
-        android:id="@+id/phone_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/phone_view"
-        android:onClick="performClick"
-        />
+        <Button
+            android:id="@+id/equal_division_grid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/equal_division_grid"
+            android:onClick="performClick"
+            />
 
-    <Button
-        android:id="@+id/dialog"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/dialog"
-        android:onClick="performClick"
-        />
+        <Button
+            android:id="@+id/phone_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/phone_view"
+            android:onClick="performClick"
+            />
 
-    <Button
-        android:id="@+id/tab_host"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/tab_host"
-        android:onClick="performClick"
-        />
-    <Button
-        android:id="@+id/progress_bar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/progress_bar"
-        android:onClick="performClick"
-        />
+        <Button
+            android:id="@+id/dialog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/dialog"
+            android:onClick="performClick"
+            />
 
-</LinearLayout>
+        <Button
+            android:id="@+id/tab_host"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tab_host"
+            android:onClick="performClick"
+            />
+        <Button
+            android:id="@+id/progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/progress_bar"
+            android:onClick="performClick"
+            />
+        <Button
+            android:id="@+id/transparent_activity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/transparent_activity"
+            android:onClick="performClick"
+            />
+
+    </LinearLayout>
+
+
+</ScrollView>

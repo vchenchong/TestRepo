@@ -11,5 +11,6 @@
     <string name="dialog">Dialog</string>
     <string name="tab_host">TabHost</string>
     <string name="progress_bar">ProgressBar</string>
+    <string name="transparent_activity">TransparentActivity</string>
 
 </resources>
