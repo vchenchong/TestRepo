@@ -55,6 +55,7 @@ public class EqualDivisionGridLayout extends ViewGroup {
 
     private OnClickListener mCommonOnClickListener;
     private OnGridItemClickListener mGridItemClickListener;
+    private int mSelectedItem = -1;
 
     public EqualDivisionGridLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -86,7 +87,18 @@ public class EqualDivisionGridLayout extends ViewGroup {
             @Override
             public void onClick(View v) {
                 if (mGridItemClickListener != null) {
-                    mGridItemClickListener.onGridItemClick(v, indexOfChild(v));
+                    int newSelectedItem = indexOfChild(v);
+                    if (newSelectedItem == mSelectedItem) {
+                        return;
+                    }
+
+                    View lastSelectedView = getChildAt(mSelectedItem);
+                    if (lastSelectedView != null) {
+                        lastSelectedView.setSelected(false);
+                    }
+                    v.setSelected(true);
+                    mSelectedItem = newSelectedItem;
+                    mGridItemClickListener.onGridItemClick(v, newSelectedItem);
                 }
             }
         };
