@@ -8,58 +8,23 @@
     android:showDividers="middle"
     >
 
+    <include
+        android:id="@+id/custom_action_bar"
+        layout="@layout/action_bar_layout"
+        />
+
     <FrameLayout
-        android:id="@android:id/content"
+        android:id="@+id/content"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         >
     </FrameLayout>
 
-    <LinearLayout
+    <com.cc.testrepo.tabhost.view.BottomTabGroup
+        android:id="@+id/bottomTagGroup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
-        <TextView
-            android:id="@+id/btn_0"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="首页"
-            android:drawableTop="@mipmap/ic_launcher"
-            />
-
-        <TextView
-            android:id="@+id/btn_1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="品质优惠"
-            android:drawableTop="@mipmap/ic_launcher"
-            />
-
-        <TextView
-            android:id="@+id/btn_2"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="发现"
-            android:drawableTop="@mipmap/ic_launcher"
-            />
-
-        <TextView
-            android:id="@+id/btn_3"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="我的"
-            android:drawableTop="@mipmap/ic_launcher"
-            />
-
-    </LinearLayout>
+    </com.cc.testrepo.tabhost.view.BottomTabGroup>
 
 </LinearLayout>

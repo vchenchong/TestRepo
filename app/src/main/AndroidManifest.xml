@@ -42,7 +42,9 @@
         <activity android:name=".dialog.DialogTestActivity">
         </activity>
 
-        <activity android:name=".tabhost.TabHostActivity">
+        <activity android:name=".tabhost.TabHostActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar"
+            >
         </activity>
 
         <activity android:name=".progressbar.ProgressBarTestActivity">
