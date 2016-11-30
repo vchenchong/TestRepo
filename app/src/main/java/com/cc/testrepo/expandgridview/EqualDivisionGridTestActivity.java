@@ -44,6 +44,8 @@ public class EqualDivisionGridTestActivity extends BaseActivity {
 //                tv.setVisibility(View.INVISIBLE);
 //            }
 
+            mGrid.selectItem(10);
+
             mGrid.setOnGridItemClickListener(new EqualDivisionGridLayout.OnGridItemClickListener() {
                 @Override
                 public void onGridItemClick(View view, int position) {

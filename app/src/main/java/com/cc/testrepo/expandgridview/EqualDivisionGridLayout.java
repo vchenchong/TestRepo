@@ -86,18 +86,19 @@ public class EqualDivisionGridLayout extends ViewGroup {
         mCommonOnClickListener = new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mGridItemClickListener != null) {
-                    int newSelectedItem = indexOfChild(v);
-                    if (newSelectedItem == mSelectedItem) {
-                        return;
-                    }
+                int newSelectedItem = indexOfChild(v);
+                if (newSelectedItem == mSelectedItem) {
+                    return;
+                }
 
-                    View lastSelectedView = getChildAt(mSelectedItem);
-                    if (lastSelectedView != null) {
-                        lastSelectedView.setSelected(false);
-                    }
-                    v.setSelected(true);
-                    mSelectedItem = newSelectedItem;
+                View lastSelectedView = getChildAt(mSelectedItem);
+                if (lastSelectedView != null) {
+                    lastSelectedView.setSelected(false);
+                }
+                v.setSelected(true);
+                mSelectedItem = newSelectedItem;
+
+                if (mGridItemClickListener != null) {
                     mGridItemClickListener.onGridItemClick(v, newSelectedItem);
                 }
             }
@@ -118,6 +119,32 @@ public class EqualDivisionGridLayout extends ViewGroup {
 
     public void setOnGridItemClickListener(OnGridItemClickListener listener) {
         mGridItemClickListener = listener;
+    }
+
+    public void selectItem(int position) {
+        if (position < 0 || position >= getChildCount()) {
+            return;
+        }
+
+        if (position == mSelectedItem) {
+            return;
+        }
+
+        View newSelectedView = getChildAt(position);
+        if (newSelectedView == null) {
+            return;
+        }
+
+        View lastSelectedItemView = getChildAt(mSelectedItem);
+        if (lastSelectedItemView != null) {
+            lastSelectedItemView.setSelected(false);
+        }
+        newSelectedView.setSelected(true);
+        mSelectedItem = position;
+
+        if (mGridItemClickListener != null) {
+            mGridItemClickListener.onGridItemClick(newSelectedView, position);
+        }
     }
 
     @Override
