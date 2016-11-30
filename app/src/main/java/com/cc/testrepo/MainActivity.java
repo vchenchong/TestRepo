@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import com.cc.testrepo.activity.transparent.TransparentTestActivity;
 import com.cc.testrepo.dialog.DialogTestActivity;
 import com.cc.testrepo.expandgridview.EqualDivisionGridTestActivity;
 import com.cc.testrepo.expandgridview.ExpandViewTestActivity;
@@ -18,7 +19,7 @@ import com.cc.testrepo.tabhost.TabHostActivity;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final Class TEST_CLASS = EqualDivisionGridTestActivity.class;
+    private static final Class TEST_CLASS = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +75,11 @@ public class MainActivity extends AppCompatActivity {
             case R.id.progress_bar:
                 intent = new Intent(this, ProgressBarTestActivity.class);
                 startActivity(intent);
+                break;
+            case R.id.transparent_activity:
+                intent = new Intent(this, TransparentTestActivity.class);
+                startActivity(intent);
+                overridePendingTransition(0, 0);
                 break;
         }
     }
