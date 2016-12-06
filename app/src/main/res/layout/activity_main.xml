@@ -103,6 +103,14 @@
             android:onClick="performClick"
             />
 
+        <Button
+            android:id="@+id/fixed_grid_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/fixed_grid_layout"
+            android:onClick="performClick"
+            />
+
     </LinearLayout>
 
 

@@ -53,6 +53,9 @@
             >
         </activity>
 
+        <activity android:name=".expandgridview.FixedSpaceGridLayoutTestActivity">
+        </activity>
+
     </application>
 
 </manifest>
