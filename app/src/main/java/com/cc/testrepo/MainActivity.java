@@ -9,6 +9,7 @@ import com.cc.testrepo.activity.transparent.TransparentTestActivity;
 import com.cc.testrepo.dialog.DialogTestActivity;
 import com.cc.testrepo.expandgridview.EqualDivisionGridTestActivity;
 import com.cc.testrepo.expandgridview.ExpandViewTestActivity;
+import com.cc.testrepo.expandgridview.FixedSpaceGridLayoutTestActivity;
 import com.cc.testrepo.ime.IMETestActivity;
 import com.cc.testrepo.multitouch.MultiTouchTestActivity;
 import com.cc.testrepo.nestedscroll.NestedScrollTestActivity;
@@ -19,7 +20,7 @@ import com.cc.testrepo.tabhost.TabHostActivity;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final Class TEST_CLASS = EqualDivisionGridTestActivity.class;
+    private static final Class TEST_CLASS = FixedSpaceGridLayoutTestActivity.class;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +81,10 @@ public class MainActivity extends AppCompatActivity {
                 intent = new Intent(this, TransparentTestActivity.class);
                 startActivity(intent);
                 overridePendingTransition(0, 0);
+                break;
+            case R.id.fixed_grid_layout:
+                intent = new Intent(this, FixedSpaceGridLayoutTestActivity.class);
+                startActivity(intent);
                 break;
         }
     }
