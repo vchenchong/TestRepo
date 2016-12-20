@@ -1,4 +1,4 @@
-package com.cc.testrepo.tabhost;
+package com.cc.testrepo.tabhost.view;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -71,6 +71,16 @@ public class BadgeViewGroup extends ViewGroup {
 
     public void setIconText(String iconText) {
         mIconView.setText(iconText);
+    }
+
+    @Override
+    public void addView(View child, int index, LayoutParams params) {
+        super.addView(child, index, params);
+        ViewGroup.LayoutParams lp = child.getLayoutParams();
+        if (lp != null) {
+            lp.width = LayoutParams.MATCH_PARENT;
+            lp.height = LayoutParams.MATCH_PARENT;
+        }
     }
 
     @Override

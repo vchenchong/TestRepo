@@ -5,11 +5,9 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import com.cc.testrepo.activity.transparent.TransparentTestActivity;
 import com.cc.testrepo.dialog.DialogTestActivity;
 import com.cc.testrepo.expandgridview.EqualDivisionGridTestActivity;
 import com.cc.testrepo.expandgridview.ExpandViewTestActivity;
-import com.cc.testrepo.expandgridview.FixedSpaceGridLayoutTestActivity;
 import com.cc.testrepo.ime.IMETestActivity;
 import com.cc.testrepo.multitouch.MultiTouchTestActivity;
 import com.cc.testrepo.nestedscroll.NestedScrollTestActivity;
@@ -20,7 +18,7 @@ import com.cc.testrepo.tabhost.TabHostActivity;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final Class TEST_CLASS = FixedSpaceGridLayoutTestActivity.class;
+    private static final Class TEST_CLASS = TabHostActivity.class;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
