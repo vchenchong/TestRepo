@@ -50,6 +50,14 @@
         <activity android:name=".progressbar.ProgressBarTestActivity">
         </activity>
 
+        <activity android:name=".activity.transparent.TransparentTestActivity"
+            android:theme="@style/TransparentTheme"
+            >
+        </activity>
+
+        <activity android:name=".expandgridview.FixedSpaceGridLayoutTestActivity">
+        </activity>
+
     </application>
 
 </manifest>

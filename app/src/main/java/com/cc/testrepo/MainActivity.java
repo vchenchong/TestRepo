@@ -75,6 +75,15 @@ public class MainActivity extends AppCompatActivity {
                 intent = new Intent(this, ProgressBarTestActivity.class);
                 startActivity(intent);
                 break;
+            case R.id.transparent_activity:
+                intent = new Intent(this, TransparentTestActivity.class);
+                startActivity(intent);
+                overridePendingTransition(0, 0);
+                break;
+            case R.id.fixed_grid_layout:
+                intent = new Intent(this, FixedSpaceGridLayoutTestActivity.class);
+                startActivity(intent);
+                break;
         }
     }
 }
