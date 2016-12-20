@@ -1,6 +1,9 @@
 package com.cc.testrepo.tabhost;
 
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.StateListDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -51,7 +54,13 @@ public class TabHostActivity extends BaseActivity implements BottomTabGroup.OnTa
         });
 
         List<Drawable> drawableList = new ArrayList<>(4);
-        drawableList.add(ContextCompat.getDrawable(this, R.mipmap.ic_launcher));
+        StateListDrawable drawable = new StateListDrawable();
+        BitmapDrawable collectUnSelected = new BitmapDrawable(getResources(), BitmapFactory.decodeResource(getResources(), R.drawable.collect_unselected));
+        BitmapDrawable collectSelected = new BitmapDrawable(getResources(), BitmapFactory.decodeResource(getResources(), R.drawable.collect_selected));
+        drawable.addState(new int[] {android.R.attr.state_selected}, collectSelected);
+        drawable.addState(new int[] {}, collectUnSelected);
+        drawableList.add(drawable);
+//        drawableList.add(ContextCompat.getDrawable(this, R.mipmap.ic_launcher));
         drawableList.add(ContextCompat.getDrawable(this, R.mipmap.ic_launcher));
         drawableList.add(ContextCompat.getDrawable(this, R.mipmap.ic_launcher));
         drawableList.add(ContextCompat.getDrawable(this, R.mipmap.ic_launcher));
