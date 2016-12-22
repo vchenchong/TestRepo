@@ -1,5 +1,6 @@
 package com.cc.testrepo.recyclerview;
 
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -55,6 +56,7 @@ public class RecyclerViewTestActivity extends BaseActivity {
 
     private void initTouchHelper() {
         ItemTouchHelper.Callback callback = new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP|ItemTouchHelper.DOWN, ItemTouchHelper.LEFT) {
+
             @Override
             public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
 
@@ -73,6 +75,45 @@ public class RecyclerViewTestActivity extends BaseActivity {
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
                 int position = viewHolder.getAdapterPosition();
                 mAdapter.remove(position);
+            }
+
+            @Override
+            public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+
+                // 拖拽元素增加边界限制:不允许拖出RecyclerView
+                if (actionState == ItemTouchHelper.ACTION_STATE_DRAG) {
+                    if (dY < 0) {
+                        // 向上拖动
+                        dY = Math.max(dY, -(viewHolder.itemView.getTop() - mRecyclerView.getPaddingTop()));
+                    } else {
+                        // 向下拖动
+                        dY = Math.min(dY, recyclerView.getHeight() - recyclerView.getPaddingBottom() - viewHolder.itemView.getBottom());
+                    }
+                }
+
+                super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+
+                // 侧滑删除的alpha效果
+                if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
+                    float progress = Math.abs(dX) / viewHolder.itemView.getWidth();
+                    viewHolder.itemView.setAlpha(1f - progress);
+                }
+            }
+
+            @Override
+            public void onSelectedChanged(RecyclerView.ViewHolder viewHolder, int actionState) {
+                super.onSelectedChanged(viewHolder, actionState);
+
+                // 拖拽元素的放大效果
+                if (actionState == ItemTouchHelper.ACTION_STATE_DRAG) {
+                    viewHolder.itemView.setScaleY(1.5f);
+                }
+            }
+
+            @Override
+            public void clearView(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
+                super.clearView(recyclerView, viewHolder);
+                viewHolder.itemView.setScaleY(1f);
             }
         };
         ItemTouchHelper helper = new ItemTouchHelper(callback);
