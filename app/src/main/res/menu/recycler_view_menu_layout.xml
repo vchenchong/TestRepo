@@ -17,4 +17,11 @@
         app:showAsAction="never"
         />
 
+    <item
+        android:id="@+id/refresh"
+        android:icon="@drawable/add"
+        android:title="Refresh"
+        app:showAsAction="never"
+        />
+
 </menu>

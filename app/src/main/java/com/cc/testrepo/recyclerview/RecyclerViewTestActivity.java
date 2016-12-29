@@ -15,6 +15,11 @@ public class RecyclerViewTestActivity extends BaseActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.recycler_view_test_activity_layout);
+//        if (getSupportFragmentManager().findFragmentByTag("PullToRefresh") == null) {
+//            getSupportFragmentManager().beginTransaction()
+//                    .add(R.id.root_view, new RecyclerPullToRefreshTestFragment(), "PullToRefresh")
+//                    .commitAllowingStateLoss();
+//        }
     }
 
     @Override
@@ -43,6 +48,16 @@ public class RecyclerViewTestActivity extends BaseActivity {
                 }
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.root_view, fragment, "Wrap")
+                        .addToBackStack(null)
+                        .commitAllowingStateLoss();
+                return true;
+            case R.id.refresh:
+                fragment = getSupportFragmentManager().findFragmentByTag("PullToRefresh");
+                if (fragment == null) {
+                    fragment = new RecyclerPullToRefreshTestFragment();
+                }
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.root_view, fragment, "PullToRefresh")
                         .addToBackStack(null)
                         .commitAllowingStateLoss();
                 return true;

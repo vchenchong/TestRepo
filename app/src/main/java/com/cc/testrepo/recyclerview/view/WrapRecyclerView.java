@@ -25,10 +25,21 @@ public class WrapRecyclerView extends RecyclerView {
     }
 
     public void addHeaderView(View headerView) {
-        mHeaderViewList.add(headerView);
+        addHeaderView(headerView, mHeaderViewList.size());
+    }
+
+    public void addHeaderView(View headerView, int index) {
+        if (index < 0 || index > mHeaderViewList.size()) {
+            return;
+        }
+        mHeaderViewList.add(index, headerView);
         if (mAdapter != null) {
             mAdapter.notifyDataSetChanged();
         }
+    }
+
+    public int getHeaderViewCount() {
+        return mHeaderViewList.size();
     }
 
     public void removeHeaderView(View headerView) {
