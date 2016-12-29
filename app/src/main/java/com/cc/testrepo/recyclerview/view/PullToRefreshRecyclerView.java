@@ -20,6 +20,7 @@ public class PullToRefreshRecyclerView extends WrapRecyclerView {
     private boolean mEnablePullToRefresh;
     private boolean mIsRefreshing;
     private float mDownY;
+    private int mActivePointerId = MotionEvent.INVALID_POINTER_ID;
     private Scroller mScroller;
 
     private OnRefreshListener mOnRefreshListener;
@@ -80,6 +81,14 @@ public class PullToRefreshRecyclerView extends WrapRecyclerView {
     public boolean onInterceptTouchEvent(MotionEvent e) {
         switch (e.getActionMasked()) {
             case MotionEvent.ACTION_DOWN:
+                mActivePointerId = e.getPointerId(0);
+                mDownY = e.getY();
+                break;
+            case MotionEvent.ACTION_POINTER_DOWN:
+                int index = e.getActionIndex();
+                mActivePointerId = e.getPointerId(index);
+                mDownY = e.getY();
+                break;
             case MotionEvent.ACTION_MOVE:
                 mDownY = e.getY();
                 break;
@@ -91,22 +100,38 @@ public class PullToRefreshRecyclerView extends WrapRecyclerView {
     public boolean onTouchEvent(MotionEvent e) {
         switch (e.getActionMasked()) {
             case MotionEvent.ACTION_DOWN:
+                mActivePointerId = e.getPointerId(0);
                 mDownY = e.getY();
+                break;
+            case MotionEvent.ACTION_POINTER_DOWN:
+                int index = e.getActionIndex();
+                mActivePointerId = e.getPointerId(index);
+                mDownY = e.getY(index);
                 break;
             case MotionEvent.ACTION_MOVE:
                 if (!mEnablePullToRefresh || mHeaderView == null || mLayoutManager == null) {
                     break;
                 }
-
-                float y = e.getY();
+                index = e.findPointerIndex(mActivePointerId);
+                float y = e.getY(index);
                 float deltaY = y - mDownY;
                 mDownY = y;
                 if (mLayoutManager.findFirstVisibleItemPosition() <= 1 && (mHeaderView.getVisibleHeight() > 0 || deltaY > 0)) {
                     updateHeaderHeight(deltaY / HEADER_OFFSET_RADIO);
                 }
                 break;
+            case MotionEvent.ACTION_POINTER_UP:
+                index = e.getActionIndex();
+                int pointerId = e.getPointerId(index);
+                if (pointerId == mActivePointerId) {
+                    int newIndex = index == 0 ? 1 : 0;
+                    mDownY = e.getY(newIndex);
+                    mActivePointerId = e.getPointerId(newIndex);
+                }
+                break;
             case MotionEvent.ACTION_CANCEL:
             case MotionEvent.ACTION_UP:
+                mActivePointerId = MotionEvent.INVALID_POINTER_ID;
                 if (mHeaderView != null && mHeaderView.getVisibleHeight() > 0) {
                     if (!mIsRefreshing && mHeaderView.getVisibleHeight() >= mHeaderViewIntrinsicHeight) {
                         mIsRefreshing = true;
