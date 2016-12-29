@@ -1,21 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     >
 
     <item
-        android:id="@+id/action_add"
+        android:id="@+id/item_touch_helper"
         android:icon="@drawable/add"
-        android:title="添加"
-        app:showAsAction="always"
+        android:title="ItemTouchHelper"
+        app:showAsAction="never"
         />
 
     <item
-        android:id="@+id/action_delete"
-        android:icon="@drawable/delete"
-        android:title="删除"
-        app:showAsAction="always"
+        android:id="@+id/wrap"
+        android:icon="@drawable/add"
+        android:title="Wrap"
+        app:showAsAction="never"
         />
 
 </menu>
