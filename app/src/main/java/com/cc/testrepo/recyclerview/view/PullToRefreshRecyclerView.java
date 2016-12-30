@@ -116,7 +116,12 @@ public class PullToRefreshRecyclerView extends WrapRecyclerView {
                 float y = e.getY(index);
                 float deltaY = y - mDownY;
                 mDownY = y;
-                if (mLayoutManager.findFirstVisibleItemPosition() <= 1 && (mHeaderView.getVisibleHeight() > 0 || deltaY > 0)) {
+                // 对于mLayoutManager.findFirstCompletelyVisibleItemPosition()的返回值:
+                //    -1: Header隐藏且没有数据,此时可以下拉刷新
+                //     0: Header部分或全部显示(getVisibleHeight() > 0),可以下拉刷新
+                //     1: HeaderView影藏(getVisibleHeight() == 0),此时HeaderView不算作VisibleItem
+                if (mLayoutManager.findFirstCompletelyVisibleItemPosition() <= 1
+                        && (mHeaderView.getVisibleHeight() > 0 || deltaY > 0)) {
                     updateHeaderHeight(deltaY / HEADER_OFFSET_RADIO);
                 }
                 break;
