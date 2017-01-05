@@ -1,13 +1,20 @@
 package com.cc.testrepo.recyclerview.view;
 
 import android.content.Context;
+import android.support.annotation.IntRange;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.widget.Scroller;
 
 public class PullToRefreshRecyclerView extends WrapRecyclerView {
+
+    public static final int STATE_LOAD_MORE_COMPLETE = 0;
+    public static final int STATE_LOAD_MORE_FAILED = 1;
+    public static final int STATE_LOAD_MORE_NO_DATA = 2;
 
     private final static float HEADER_OFFSET_RADIO = 1.8f;
     private final static int HEADER_SCROLL_DURATION = 400;
@@ -25,6 +32,12 @@ public class PullToRefreshRecyclerView extends WrapRecyclerView {
 
     private OnRefreshListener mOnRefreshListener;
 
+    private AbsPullToRefreshRecyclerViewFooter mFooterView;
+    private boolean mEnableLoadMore;
+    private boolean mIsLoadingMore;
+
+    private OnLoadMoreListener mOnLoadMoreListener;
+
     public PullToRefreshRecyclerView(Context context) {
         super(context);
         init(context);
@@ -37,6 +50,33 @@ public class PullToRefreshRecyclerView extends WrapRecyclerView {
 
     private void init(Context context) {
         mScroller = new Scroller(context);
+        addOnScrollListener(new OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if (!mEnableLoadMore || mFooterView == null || mLayoutManager == null || getAdapter() == null) {
+                    return;
+                }
+                if (mIsLoadingMore) {
+                    return;
+                }
+                if (mFooterView.getParent() == null) {
+                    return;
+                }
+
+                int footerTop = mLayoutManager.getDecoratedTop(mFooterView);
+                int footerBottom = mLayoutManager.getDecoratedBottom(mFooterView);
+                int recyclerViewBottom = getBottom() - getPaddingBottom();
+                if (footerTop <= recyclerViewBottom && footerBottom >= recyclerViewBottom) {
+                    Log.d("chen", "reach End");
+                    mFooterView.setState(AbsPullToRefreshRecyclerViewFooter.STATE_LOADING);
+                    mFooterView.show();
+                    if (mOnLoadMoreListener != null) {
+                        mOnLoadMoreListener.onLoadMore();
+                        mIsLoadingMore = true;
+                    }
+                }
+            }
+        });
     }
 
     @Override
@@ -50,11 +90,13 @@ public class PullToRefreshRecyclerView extends WrapRecyclerView {
 
     public void setRefreshHeader(AbsPullToRefreshRecyclerViewHeader headerView) {
         if (mHeaderView != null) {
+            mHeaderView.setState(AbsPullToRefreshRecyclerViewHeader.STATE_DEFAULT);
             removeHeaderView(mHeaderView);
             mHeaderViewIntrinsicHeight = 0;
         }
         mHeaderView = headerView;
         if (headerView != null) {
+            headerView.setState(AbsPullToRefreshRecyclerViewHeader.STATE_DEFAULT);
             headerView.setLayoutParams(new PullToRefreshRecyclerView.LayoutParams(
                     LayoutParams.MATCH_PARENT, 0));
             addHeaderView(headerView, 0);
@@ -75,6 +117,49 @@ public class PullToRefreshRecyclerView extends WrapRecyclerView {
             mIsRefreshing = false;
             resetHeaderHeight();
         }
+    }
+
+    public void setLoadMoreFooter(AbsPullToRefreshRecyclerViewFooter footerView) {
+        if (mFooterView != null) {
+            mFooterView.setState(AbsPullToRefreshRecyclerViewFooter.STATE_DEFAULT);
+            removeFooterView(mFooterView);
+        }
+        mFooterView = footerView;
+        if (footerView != null) {
+            footerView.setState(AbsPullToRefreshRecyclerViewFooter.STATE_DEFAULT);
+            footerView.setLayoutParams(new RecyclerView.LayoutParams(LayoutParams.MATCH_PARENT,
+                    LayoutParams.WRAP_CONTENT));
+            footerView.hide();
+            addFooterView(footerView);
+        }
+    }
+
+    public void enableLoadMore(boolean enable) {
+        mEnableLoadMore = enable;
+    }
+
+    public void setOnLoadMoreListener(OnLoadMoreListener listener) {
+        mOnLoadMoreListener = listener;
+    }
+
+    public void stopLoadMore(@IntRange(from = 0, to = 2) int result) {
+        if (mFooterView == null) {
+            return;
+        }
+
+        switch (result) {
+            case STATE_LOAD_MORE_COMPLETE:
+                mFooterView.setState(AbsPullToRefreshRecyclerViewFooter.STATE_DEFAULT);
+                mFooterView.hide();
+                break;
+            case STATE_LOAD_MORE_FAILED:
+                mFooterView.setState(AbsPullToRefreshRecyclerViewFooter.STATE_LOAD_FAILED);
+                break;
+            case STATE_LOAD_MORE_NO_DATA:
+                mFooterView.setState(AbsPullToRefreshRecyclerViewFooter.STATE_NO_DATA);
+                break;
+        }
+        mIsLoadingMore = false;
     }
 
     @Override
@@ -209,5 +294,9 @@ public class PullToRefreshRecyclerView extends WrapRecyclerView {
 
     public interface OnRefreshListener {
         void onRefresh();
+    }
+
+    public interface OnLoadMoreListener {
+        void onLoadMore();
     }
 }

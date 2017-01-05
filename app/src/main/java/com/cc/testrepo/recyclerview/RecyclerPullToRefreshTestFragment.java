@@ -14,6 +14,7 @@ import com.cc.testrepo.base.BaseFragment;
 import com.cc.testrepo.recyclerview.adapter.SimpleAdapter;
 import com.cc.testrepo.recyclerview.model.SimpleStringModel;
 import com.cc.testrepo.recyclerview.view.PullToRefreshRecyclerView;
+import com.cc.testrepo.recyclerview.view.PullToRefreshRecyclerViewFooter;
 import com.cc.testrepo.recyclerview.view.PullToRefreshRecyclerViewHeader;
 
 import java.util.List;
@@ -55,6 +56,23 @@ public class RecyclerPullToRefreshTestFragment extends BaseFragment {
                         mRecyclerView.stopRefresh();
                     }
                 }, 1500);
+            }
+        });
+
+        mRecyclerView.enableLoadMore(true);
+        mRecyclerView.setLoadMoreFooter(new PullToRefreshRecyclerViewFooter(getContext()));
+        mRecyclerView.setOnLoadMoreListener(new PullToRefreshRecyclerView.OnLoadMoreListener() {
+            @Override
+            public void onLoadMore() {
+                Log.d("chen", "onLoadMore");
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mModelList.addAll(new SimpleStringModel.SimpleStringModelProvider().get(5));
+                        mAdapter.notifyDataSetChanged();
+                        mRecyclerView.stopLoadMore(PullToRefreshRecyclerView.STATE_LOAD_MORE_COMPLETE);
+                    }
+                }, 2000);
             }
         });
 

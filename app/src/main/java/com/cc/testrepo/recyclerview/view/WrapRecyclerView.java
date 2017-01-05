@@ -67,8 +67,19 @@ public class WrapRecyclerView extends RecyclerView {
 
     @Override
     public void setAdapter(Adapter adapter) {
+        if (mAdapter != null && mAdapter.getInnerAdapter() != null) {
+            mAdapter.getInnerAdapter().unregisterAdapterDataObserver(mDataObserver);
+        }
+
+        if (adapter != null) {
+            adapter.registerAdapterDataObserver(mDataObserver);
+        }
         mAdapter = new WrapAdapter(adapter, mHeaderViewList, mFooterViewList);
         super.setAdapter(mAdapter);
+    }
+
+    public Adapter getAdapter() {
+        return mAdapter;
     }
 
     private static class WrapAdapter<VH extends ViewHolder> extends RecyclerView.Adapter {
@@ -82,6 +93,10 @@ public class WrapRecyclerView extends RecyclerView {
             mInnerAdapter = adapter;
             mHeaderViewList = headerViewList;
             mFooterViewList = footerViewList;
+        }
+
+        public Adapter getInnerAdapter() {
+            return mInnerAdapter;
         }
 
         @Override
@@ -257,4 +272,55 @@ public class WrapRecyclerView extends RecyclerView {
             }
         }
     }
+
+    private AdapterDataObserver mDataObserver = new AdapterDataObserver() {
+        @Override
+        public void onChanged() {
+            super.onChanged();
+            if (mAdapter != null) {
+                mAdapter.notifyDataSetChanged();
+            }
+        }
+
+        @Override
+        public void onItemRangeChanged(int positionStart, int itemCount) {
+            super.onItemRangeChanged(positionStart, itemCount);
+            if (mAdapter != null) {
+                mAdapter.notifyItemRangeChanged(mAdapter.getHeaderViewCount() + positionStart, itemCount);
+            }
+        }
+
+        @Override
+        public void onItemRangeChanged(int positionStart, int itemCount, Object payload) {
+            super.onItemRangeChanged(positionStart, itemCount, payload);
+            if (mAdapter != null) {
+                mAdapter.notifyItemRangeChanged(mAdapter.getHeaderViewCount() + positionStart, itemCount, payload);
+            }
+        }
+
+        @Override
+        public void onItemRangeInserted(int positionStart, int itemCount) {
+            super.onItemRangeInserted(positionStart, itemCount);
+            if (mAdapter != null) {
+                mAdapter.notifyItemRangeInserted(mAdapter.getHeaderViewCount() + positionStart, itemCount);
+            }
+        }
+
+        @Override
+        public void onItemRangeRemoved(int positionStart, int itemCount) {
+            super.onItemRangeRemoved(positionStart, itemCount);
+            if (mAdapter != null) {
+                mAdapter.notifyItemRangeRemoved(mAdapter.getHeaderViewCount() + positionStart, itemCount);
+            }
+        }
+
+        @Override
+        public void onItemRangeMoved(int fromPosition, int toPosition, int itemCount) {
+            super.onItemRangeMoved(fromPosition, toPosition, itemCount);
+            if (mAdapter != null) {
+                int headerViewCount = mAdapter.getHeaderViewCount();
+                mAdapter.notifyItemMoved(headerViewCount + fromPosition, headerViewCount + toPosition);
+            }
+        }
+    };
 }

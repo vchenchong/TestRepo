@@ -15,6 +15,8 @@ public class SimpleStringModel {
 
     public static class SimpleStringModelProvider {
 
+        public static int sPositionOffset;
+
         private static final int COUNT = 20;
 
         public List<SimpleStringModel> get() {
@@ -24,8 +26,9 @@ public class SimpleStringModel {
         public List<SimpleStringModel> get(int count) {
             List<SimpleStringModel> result = new ArrayList<>(count);
             for (int i=0; i<count; ++i) {
-                result.add(new SimpleStringModel("Position : " + i, getItemViewType(i)));
+                result.add(new SimpleStringModel("Position : " + (i + sPositionOffset), getItemViewType(i)));
             }
+            sPositionOffset += count;
             return result;
         }
 
