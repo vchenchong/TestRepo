@@ -13,5 +13,6 @@
     <string name="progress_bar">ProgressBar</string>
     <string name="transparent_activity">TransparentActivity</string>
     <string name="fixed_grid_layout">GridLayout</string>
+    <string name="recycler_view">RecyclerView</string>
 
 </resources>

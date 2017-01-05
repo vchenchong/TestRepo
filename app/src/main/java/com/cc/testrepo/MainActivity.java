@@ -5,20 +5,23 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import com.cc.testrepo.activity.transparent.TransparentTestActivity;
 import com.cc.testrepo.dialog.DialogTestActivity;
 import com.cc.testrepo.expandgridview.EqualDivisionGridTestActivity;
 import com.cc.testrepo.expandgridview.ExpandViewTestActivity;
+import com.cc.testrepo.expandgridview.FixedSpaceGridLayoutTestActivity;
 import com.cc.testrepo.ime.IMETestActivity;
 import com.cc.testrepo.multitouch.MultiTouchTestActivity;
 import com.cc.testrepo.nestedscroll.NestedScrollTestActivity;
 import com.cc.testrepo.overscroll.OverScrollTestActivity;
 import com.cc.testrepo.phoneview.PhoneViewTestActivity;
 import com.cc.testrepo.progressbar.ProgressBarTestActivity;
+import com.cc.testrepo.recyclerview.RecyclerViewTestActivity;
 import com.cc.testrepo.tabhost.TabHostActivity;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final Class TEST_CLASS = TabHostActivity.class;
+    private static final Class TEST_CLASS = RecyclerViewTestActivity.class;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +85,10 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.fixed_grid_layout:
                 intent = new Intent(this, FixedSpaceGridLayoutTestActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.recycler_view:
+                intent = new Intent(this, RecyclerViewTestActivity.class);
                 startActivity(intent);
                 break;
         }

@@ -58,6 +58,9 @@
         <activity android:name=".expandgridview.FixedSpaceGridLayoutTestActivity">
         </activity>
 
+        <activity android:name=".recyclerview.RecyclerViewTestActivity">
+        </activity>
+
     </application>
 
 </manifest>

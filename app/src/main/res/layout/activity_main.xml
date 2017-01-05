@@ -111,6 +111,14 @@
             android:onClick="performClick"
             />
 
+        <Button
+            android:id="@+id/recycler_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/recycler_view"
+            android:onClick="performClick"
+            />
+
     </LinearLayout>
 
 
